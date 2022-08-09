@@ -1,0 +1,145 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 5.5.41 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table employee1(e_id int primary key auto_increment,ename varchar(20),ecity varchar(30),e_salary,e_address);
+ERROR 1046 (3D000): No database selected
+mysql> create database employee1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use employee1;
+Database changed
+mysql> create table emp1(e_id int primary key auto_increment,ename varchar(20),ecity varchar(30),e_salary,e_address);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'e_address)' at line 1
+mysql> create table emp1(e_id int primary key auto_increment,ename varchar(20),ecity varchar(30),e_salary,e_address varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'e_address varchar(30))' at line 1
+mysql> create table emp1(e_id int primary key auto_increment,ename varchar(20),ecity varchar(30),e_salary int,e_address varchar(30));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> dcse emp1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dcse emp1' at line 1
+mysql> decs emp1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decs emp1' at line 1
+mysql> desc emp1;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| e_id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| ename     | varchar(20) | YES  |     | NULL    |                |
+| ecity     | varchar(30) | YES  |     | NULL    |                |
+| e_salary  | int(11)     | YES  |     | NULL    |                |
+| e_address | varchar(30) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.33 sec)
+
+mysql> insert into emp1 value(101,"arun","chennai",100000,"ecr");
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into emp1 (ename,ecity,e_salary,e_address)value("aswin","trichy",100000,"meenapakkam"),("bala","chennai",100020,"meenapakkam"),("bhavana","chennai",300000,"ecr");
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from emp1;
++------+---------+---------+----------+-------------+
+| e_id | ename   | ecity   | e_salary | e_address   |
++------+---------+---------+----------+-------------+
+|  101 | arun    | chennai |   100000 | ecr         |
+|  102 | aswin   | trichy  |   100000 | meenapakkam |
+|  103 | bala    | chennai |   100020 | meenapakkam |
+|  104 | bhavana | chennai |   300000 | ecr         |
++------+---------+---------+----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> create table company1(c_id int primary key auto_increment,cname varchar(20),ecity varchar(30));
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> desc company1;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| c_id  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| cname | varchar(20) | YES  |     | NULL    |                |
+| ecity | varchar(30) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql> insert into company1 value(101,"tcs","chennai");
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into company1 (cname,ccity)value("tcs","trichy"),("lnd","chennai"),("infoses","chennai");
+ERROR 1054 (42S22): Unknown column 'ccity' in 'field list'
+mysql> insert into company1 (cname,ecity)values("tcs","trichy"),("lnd","chennai"),("infoses","chennai");
+Query OK, 3 rows affected (0.09 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from company1;
++------+---------+---------+
+| c_id | cname   | ecity   |
++------+---------+---------+
+|  101 | tcs     | chennai |
+|  102 | tcs     | trichy  |
+|  103 | lnd     | chennai |
+|  104 | infoses | chennai |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> update colum from company1 where=ecity to cctity;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from company1 where=ecity to cctity' at line 1
+mysql> select*from emp1 where ecity="chennai";
++------+---------+---------+----------+-------------+
+| e_id | ename   | ecity   | e_salary | e_address   |
++------+---------+---------+----------+-------------+
+|  101 | arun    | chennai |   100000 | ecr         |
+|  103 | bala    | chennai |   100020 | meenapakkam |
+|  104 | bhavana | chennai |   300000 | ecr         |
++------+---------+---------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp1 set salary=salary+50000;
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> update emp1 set esalary=esalary+50000;
+ERROR 1054 (42S22): Unknown column 'esalary' in 'field list'
+mysql> update emp1 set e_salary=e_salary+50000;
+Query OK, 4 rows affected (0.09 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select*from emp1;
++------+---------+---------+----------+-------------+
+| e_id | ename   | ecity   | e_salary | e_address   |
++------+---------+---------+----------+-------------+
+|  101 | arun    | chennai |   150000 | ecr         |
+|  102 | aswin   | trichy  |   150000 | meenapakkam |
+|  103 | bala    | chennai |   150020 | meenapakkam |
+|  104 | bhavana | chennai |   350000 | ecr         |
++------+---------+---------+----------+-------------+
+4 rows in set (0.01 sec)
+
+mysql> update company1 set ecity="chennai" where="tcs";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '="tcs"' at line 1
+mysql> update company1 set ecity="chennai" where cname="tcs";
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 2  Changed: 1  Warnings: 0
+
+mysql> select*from company;
+ERROR 1146 (42S02): Table 'employee1.company' doesn't exist
+mysql> select*from company1;
++------+---------+---------+
+| c_id | cname   | ecity   |
++------+---------+---------+
+|  101 | tcs     | chennai |
+|  102 | tcs     | chennai |
+|  103 | lnd     | chennai |
+|  104 | infoses | chennai |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
